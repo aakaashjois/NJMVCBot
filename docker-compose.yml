@@ -1,0 +1,12 @@
+services:
+    selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+            - "4444:4444"
+        logging:
+            driver: none
+    app:
+        build: .
+        depends_on:
+            - selenium
+        command: sh -c "wait-for-it selenium:4444 -- python3 main.py"
